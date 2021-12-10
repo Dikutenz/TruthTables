@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Таблица истинности</string>
+
+    <string name="not">¬</string>
+    <string name="and">∧</string>
+    <string name="or">∨</string>
+    <string name="imply">→</string>
+    <string name="eq">⇔</string>
+    <string name="xor">⊕</string>
+    <string name="nor">↓</string>
+    <string name="nand">|</string>
+    <string name="opening_parenthesis">(</string>
+    <string name="closing_parenthesis">)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

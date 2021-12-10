@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_theory"
+        android:enabled="true"
+        android:icon="?android:attr/actionModeFindDrawable"
+        android:title="Теория"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_start"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_mylocation"
+        android:title="Начать"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_solve"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Решить"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_result"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Результат"
+        app:showAsAction="ifRoom" />
+</menu>

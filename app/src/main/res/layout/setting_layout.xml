@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/truth_table_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Таблица истинности" />
+
+    <CheckBox
+        android:id="@+id/sdnf_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="СДНФ" />
+
+    <CheckBox
+        android:id="@+id/sknf_check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="СКНФ" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сохранить" />
+
+</LinearLayout>

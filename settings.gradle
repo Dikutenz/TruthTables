@@ -1,0 +1,2 @@
+rootProject.name='TruthTables'
+include ':app'

@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.entities.BooleanFunction
+import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.viewModel.HistoryViewModel
 import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.views.MainActivity
@@ -17,11 +19,12 @@ import com.dikutenz.truthtables.views.results.ResultFragment
 import com.google.android.material.button.MaterialButton
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class CalculatorBinaryFragment : Fragment() {
+class CalculatorBinaryFragment : Fragment(), CalculatorSettingFragment.OnDismissListener {
 
     private val mainViewModel: MainViewModel by viewModel()
     private val historyViewModel: HistoryViewModel by viewModel()
 
+    private lateinit var toolbar: Toolbar
     private lateinit var sTextView: TextView
     private lateinit var solveButton: MaterialButton
     private lateinit var clearButton: MaterialButton
@@ -32,7 +35,7 @@ class CalculatorBinaryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_calculator_binary, container, false)
         initUI(view)
@@ -66,13 +69,8 @@ class CalculatorBinaryFragment : Fragment() {
                     mainViewModel.getInputTypeToString()
                 )
             )
-            showResultFragment()
+            (requireActivity() as MainActivity).replaceFragment(ResultFragment())
         } else Toast.makeText(activity, "Неверный ввод!", Toast.LENGTH_LONG).show()
-    }
-
-    private fun showResultFragment() {
-        val fragment: Fragment = ResultFragment()
-        if (activity is MainActivity) (activity as MainActivity).replaceFragment(fragment)
     }
 
     private fun backspaceChar() {
@@ -84,8 +82,30 @@ class CalculatorBinaryFragment : Fragment() {
         mainViewModel.clearFunction()
     }
 
+    override fun onDismiss() {
+        (requireActivity() as MainActivity).replaceFragment(
+            when (mainViewModel.inputType) {
+                InputType.REDUCED_ALPHABET -> CalculatorReducedAlphabetFragment()
+                InputType.WHOLE_ALPHABET -> CalculatorWholeAlphabetFragment()
+                InputType.BINARY -> CalculatorBinaryFragment()
+                InputType.EQUIVALENCE_FUNCTION -> CalculatorEqTwoFunctionsFragment()
+            })
+    }
 
     private fun initUI(view: View) {
+        toolbar = view.findViewById(R.id.toolbar)
+        toolbar.title = "Калькулятор"
+        toolbar.inflateMenu(R.menu.calculator_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_setting -> {
+                    val dialogFragment = CalculatorSettingFragment(this)
+                    dialogFragment.show(requireActivity().supportFragmentManager, "SettingFragment")
+                }
+            }
+            true
+        }
+
         sTextView = view.findViewById(R.id.s_text_view)
         solveButton = view.findViewById(R.id.solve_button)
 

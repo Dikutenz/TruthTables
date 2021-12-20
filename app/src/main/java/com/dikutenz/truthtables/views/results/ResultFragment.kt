@@ -1,38 +1,36 @@
 package com.dikutenz.truthtables.views.results
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.entities.BooleanFunction
-import com.dikutenz.truthtables.model.enums.Topic
+import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.viewModel.HistoryViewModel
 import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.views.MainActivity
 import com.dikutenz.truthtables.views.adapters.HistoryAdapter
 import com.dikutenz.truthtables.views.adapters.ResultPagerAdapter
+import com.dikutenz.truthtables.views.calculators.CalculatorSettingFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener, SettingFragment.OnDismissListener {
+class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener,
+    ResultSettingFragment.OnDismissListener {
 
     private val mainViewModel: MainViewModel by viewModel()
     private val historyViewModel: HistoryViewModel by viewModel()
 
-    private lateinit var historyButton: ImageButton
-    private lateinit var settingButton: ImageButton
+    private lateinit var toolbar: Toolbar
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager
     private lateinit var sTextView: TextView
@@ -44,10 +42,12 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener, SettingFr
     ): View? {
         val view = inflater.inflate(R.layout.fragment_result, container, false)
         initUI(view)
+        (requireActivity() as MainActivity).supportActionBar?.title = "Результат"
+
         mainViewModel.booleanFunction.observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && mainViewModel.enterFinished) sTextView.text = it
             else sTextView.text = "Нет данных"
-            if (mainViewModel.topic == Topic.EQUIVALENCE_FUNCTION) {
+            if (mainViewModel.inputType == InputType.EQUIVALENCE_FUNCTION) {
                 mainViewModel.secondBooleanFunction.observe(viewLifecycleOwner) { secondBooleanFunction ->
                     if (secondBooleanFunction.isNotEmpty() && mainViewModel.enterFinished)
                         s2TextView.text = secondBooleanFunction
@@ -59,12 +59,25 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener, SettingFr
     }
 
     private fun initUI(view: View) {
-        historyButton = view.findViewById(R.id.history_button)
-        settingButton = view.findViewById(R.id.settings_button)
-        settingButton.setOnClickListener {
-            val dialogFragment = SettingFragment(this)
-            dialogFragment.show(requireActivity().supportFragmentManager, "SettingFragment")
+        toolbar = view.findViewById(R.id.toolbar2)
+        toolbar.title = "Калькулятор"
+        toolbar.inflateMenu(R.menu.result_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_setting -> {
+                    val dialogFragment = ResultSettingFragment(this)
+                    dialogFragment.show(requireActivity().supportFragmentManager, "SettingFragment")
+                }
+                R.id.action_history -> {
+                    if (mainViewModel.inputType != InputType.EQUIVALENCE_FUNCTION)
+                        historyViewModel.getAll().observe(viewLifecycleOwner) { bf ->
+                            showHistory(bf)
+                        }
+                }
+            }
+            true
         }
+
         viewPager = view.findViewById(R.id.view_pager)
         setupViewPager(viewPager)
         tabLayout = view.findViewById(R.id.tab_layout)
@@ -72,18 +85,10 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener, SettingFr
         sTextView = view.findViewById(R.id.s_text_view)
         s2TextView = view.findViewById(R.id.s2_text_view)
 
-        if (mainViewModel.topic == Topic.EQUIVALENCE_FUNCTION) {
-            historyButton.visibility = View.GONE
-            s2TextView.visibility = View.VISIBLE
-        } else {
-            historyButton.visibility = View.VISIBLE
-            s2TextView.visibility = View.GONE
-            historyButton.setOnClickListener {
-                historyViewModel.getAll().observe(viewLifecycleOwner) {
-                    showHistory(it)
-                }
-            }
-        }
+        if (mainViewModel.inputType == InputType.EQUIVALENCE_FUNCTION) s2TextView.visibility =
+            View.VISIBLE
+        else s2TextView.visibility = View.GONE
+
     }
 
     private fun showHistory(list: List<BooleanFunction>) {
@@ -114,7 +119,7 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener, SettingFr
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter =
             ResultPagerAdapter((context as MainActivity).supportFragmentManager)
-        if (mainViewModel.topic == Topic.EQUIVALENCE_FUNCTION) {
+        if (mainViewModel.inputType == InputType.EQUIVALENCE_FUNCTION) {
             adapter.addFragment(ResultEqFragment(), "Сравнение")
         } else {
             adapter.addFragment(ResultAllFragment(), "Общее")

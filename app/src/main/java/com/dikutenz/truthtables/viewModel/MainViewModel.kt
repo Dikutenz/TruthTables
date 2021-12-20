@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel
 import com.dikutenz.truthtables.model.entities.BooleanFunction
 import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.model.enums.InputType.*
-import com.dikutenz.truthtables.model.enums.Topic.CREATE_TRUTH_TABLE
 
 class MainViewModel : ViewModel() {
 
-    var topic = CREATE_TRUTH_TABLE
     var isWholeTable = true
-    var isSDNF = false
-    var isSKNF = false
+    var isSDNF = true
+    var isSKNF = true
     var inputType = REDUCED_ALPHABET
 
     var booleanFunction: MutableLiveData<String> = MutableLiveData("")
@@ -55,12 +53,14 @@ class MainViewModel : ViewModel() {
         WHOLE_ALPHABET -> "whole_alphabet"
         REDUCED_ALPHABET -> "reduce_alphabet"
         BINARY -> "binary"
+        EQUIVALENCE_FUNCTION -> "equivalence_function"
     }
 
     private fun getStringToInputType(inputType: String): InputType = when (inputType) {
         "whole_alphabet" -> WHOLE_ALPHABET
         "reduce_alphabet" -> REDUCED_ALPHABET
         "binary" -> BINARY
+        "equivalence_function" -> EQUIVALENCE_FUNCTION
         else -> WHOLE_ALPHABET
     }
 

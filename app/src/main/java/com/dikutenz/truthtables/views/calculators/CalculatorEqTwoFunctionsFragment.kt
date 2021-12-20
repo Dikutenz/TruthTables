@@ -6,22 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.LogicOperations
 import com.dikutenz.truthtables.model.Solve
 import com.dikutenz.truthtables.model.enums.CorrectInput
+import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.views.MainActivity
 import com.dikutenz.truthtables.views.results.ResultFragment
 import com.google.android.material.button.MaterialButton
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class CalculatorEqTwoFunctionsFragment : Fragment() {
+class CalculatorEqTwoFunctionsFragment : Fragment(), CalculatorSettingFragment.OnDismissListener {
 
     private val mainViewModel: MainViewModel by viewModel()
 
+    private lateinit var toolbar: Toolbar
     private lateinit var s1RadioButton: RadioButton
     private lateinit var s2RadioButton: RadioButton
     private lateinit var solveButton: MaterialButton
@@ -111,13 +113,7 @@ class CalculatorEqTwoFunctionsFragment : Fragment() {
         val secondCorrectInput = Solve.checkCorrect(secondBooleanFunction)
         if(firstCorrectInput == CorrectInput.OK && secondCorrectInput == CorrectInput.OK){
             mainViewModel.enterFinished = true
-                /*historyViewModel.insert(
-                BooleanFunction(
-                    mainViewModel.booleanFunction.value!!,
-                    mainViewModel.getInputTypeToString()
-                )
-            )*/
-            showResultFragment()
+            (requireActivity() as MainActivity).replaceFragment(ResultFragment())
         }else {
             var message = "Первая функция: " + when (firstCorrectInput) {
                 CorrectInput.OK -> "Ок!"
@@ -144,12 +140,30 @@ class CalculatorEqTwoFunctionsFragment : Fragment() {
         }
     }
 
-    private fun showResultFragment() {
-        val fragment: Fragment = ResultFragment()
-        if (activity is MainActivity) (activity as MainActivity).replaceFragment(fragment)
+    override fun onDismiss() {
+        (requireActivity() as MainActivity).replaceFragment(
+            when (mainViewModel.inputType) {
+                InputType.REDUCED_ALPHABET -> CalculatorReducedAlphabetFragment()
+                InputType.WHOLE_ALPHABET -> CalculatorWholeAlphabetFragment()
+                InputType.BINARY -> CalculatorBinaryFragment()
+                InputType.EQUIVALENCE_FUNCTION -> CalculatorEqTwoFunctionsFragment()
+            })
     }
 
     private fun initUI(view: View) {
+        toolbar = view.findViewById(R.id.toolbar)
+        toolbar.title = "Калькулятор"
+        toolbar.inflateMenu(R.menu.calculator_menu)
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_setting -> {
+                    val dialogFragment = CalculatorSettingFragment(this)
+                    dialogFragment.show(requireActivity().supportFragmentManager, "SettingFragment")
+                }
+            }
+            true
+        }
+
         s1RadioButton = view.findViewById(R.id.s1_radio_button)
         s2RadioButton = view.findViewById(R.id.s2_radio_button)
         solveButton = view.findViewById(R.id.solve_button)

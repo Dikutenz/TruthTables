@@ -9,17 +9,10 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_start"
-        android:enabled="true"
-        android:icon="@android:drawable/ic_menu_mylocation"
-        android:title="Начать"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_solve"
+        android:id="@+id/action_calculator"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="Решить"
+        android:title="Калькулятор"
         app:showAsAction="ifRoom" />
 
     <item

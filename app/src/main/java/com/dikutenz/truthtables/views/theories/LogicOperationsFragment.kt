@@ -1,15 +1,15 @@
 package com.dikutenz.truthtables.views.theories
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.LogicOperations.andChar
 import com.dikutenz.truthtables.model.LogicOperations.eqChar
@@ -20,9 +20,9 @@ import com.dikutenz.truthtables.model.LogicOperations.notChar
 import com.dikutenz.truthtables.model.LogicOperations.orChar
 import com.dikutenz.truthtables.model.LogicOperations.xorChar
 import com.dikutenz.truthtables.model.Solve.getTruthTable
-import com.dikutenz.truthtables.views.adapters.TableAdapter
 import com.dikutenz.truthtables.viewModel.TheoryViewModel
-import com.squareup.picasso.Picasso
+import com.dikutenz.truthtables.views.MainActivity
+import com.dikutenz.truthtables.views.adapters.TableAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class LogicOperationsFragment : Fragment() {
@@ -36,14 +36,13 @@ class LogicOperationsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_theory_l_o, container, false)
         initUI(view)
         loadData()
         return view
     }
-
 
 
     private fun loadData() {
@@ -56,7 +55,7 @@ class LogicOperationsFragment : Fragment() {
     }
 
     private fun loadDiagram(s: String) {
-        Picasso.with(context).load(
+        diagImageView.load(
             when (s) {
                 "Конъюнкция" -> R.mipmap.diag_and_foreground
                 "Дизъюнкция" -> R.mipmap.diag_or_foreground
@@ -67,8 +66,7 @@ class LogicOperationsFragment : Fragment() {
                 "Стрелка Пирса" -> R.mipmap.diag_nor_foreground
                 "Штрих Шеффера" -> R.mipmap.diag_nand_foreground
                 else -> R.mipmap.diag_ab_foreground
-            }
-        ).placeholder(R.mipmap.diag_ab_foreground).fit().into(diagImageView)
+            })
     }
 
     private fun getDefinition(s: String) =

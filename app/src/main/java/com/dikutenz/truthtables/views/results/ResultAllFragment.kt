@@ -20,6 +20,7 @@ import com.dikutenz.truthtables.model.Solve.getShortTruthTable
 import com.dikutenz.truthtables.model.Solve.getTruthTable
 import com.dikutenz.truthtables.model.enums.InputType.BINARY
 import com.dikutenz.truthtables.viewModel.MainViewModel
+import com.dikutenz.truthtables.views.MainActivity
 import com.dikutenz.truthtables.views.adapters.TableAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -80,6 +81,8 @@ class ResultAllFragment : Fragment() {
 
 
     private fun initUI(view: View) {
+
+
         resultLayout = view.findViewById(R.id.result_layout)
         recyclerView = view.findViewById(R.id.recycler_view)
         sdnfCard = view.findViewById(R.id.sdnf_card)

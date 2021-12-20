@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dikutenz.truthtables.R
@@ -21,10 +20,9 @@ class TheoryFragment : Fragment(), TheoryAdapter.OnItemClickListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_theory, container, false)
-        initGlobalVariables()
         initUI(view)
         return view
     }
@@ -33,10 +31,6 @@ class TheoryFragment : Fragment(), TheoryAdapter.OnItemClickListener {
         theoryViewModel.s = s
         val fragment: Fragment = LogicOperationsFragment()
         (requireActivity() as MainActivity).replaceFragment(fragment)
-    }
-
-    private fun initGlobalVariables() {
-        //theoryViewModel = ViewModelProvider(requireActivity())[TheoryViewModel::class.java]
     }
 
     private fun initUI(view: View) {

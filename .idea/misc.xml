@@ -4,12 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_calculator_binary.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_calculator_eq_two_functions.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_calculator_reduced_alphabet.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_calculator_whole_alphabet.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_calculatro_setting.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_result.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_result_setting.xml" value="0.18432971014492755" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_setting_create_truth_table.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/fragment_topic.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/rating_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/setting_layout.xml" value="0.22826086956521738" />
         <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/layout/toast_layout.xml" value="0.22826086956521738" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/menu/bottom_menu.xml" value="0.23333333333333334" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/menu/calculator_menu.xml" value="0.23229166666666667" />
+        <entry key="..\:/Programming/AndroidStudioProjects/TruthTables/app/src/main/res/menu/result_menu.xml" value="0.23333333333333334" />
       </map>
     </option>
   </component>

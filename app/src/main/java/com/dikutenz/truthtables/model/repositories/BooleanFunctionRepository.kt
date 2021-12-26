@@ -4,7 +4,7 @@ import android.util.Log
 import com.dikutenz.truthtables.model.AppDatabase
 import com.dikutenz.truthtables.model.entities.BooleanFunction
 
-class BooleanFunctionRepository(private val database: AppDatabase) {
+class BooleanFunctionRepository(database: AppDatabase) {
 
     private val booleanFunctionDao = database.booleanFunctionDao
 

@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), FragmentChangeListener {
     private val historyViewModel: HistoryViewModel by viewModel()
     private lateinit var bottomNav: BottomNavigationView
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,9 +42,7 @@ class MainActivity : AppCompatActivity(), FragmentChangeListener {
         mainViewModel.isSDNF = true
         mainViewModel.isSKNF = true
         mainViewModel.enterFinished = false
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, CalculatorReducedAlphabetFragment())
-            .commit()
+        replaceFragment(CalculatorReducedAlphabetFragment())
     }
 
 
@@ -60,7 +57,7 @@ class MainActivity : AppCompatActivity(), FragmentChangeListener {
         bottomNav.menu.findItem(idItemMenu).isChecked = true
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .commit()
     }
 
@@ -79,24 +76,12 @@ class MainActivity : AppCompatActivity(), FragmentChangeListener {
 
     private val navListener: NavigationBarView.OnItemSelectedListener =
         NavigationBarView.OnItemSelectedListener { item ->
-            val selectedFragment: Fragment =
-                when (item.itemId) {
-                    R.id.action_theory -> TheoryFragment()
-                    R.id.action_calculator ->
-                        when (mainViewModel.inputType) {
-                            InputType.REDUCED_ALPHABET -> CalculatorReducedAlphabetFragment()
-                            InputType.WHOLE_ALPHABET -> CalculatorWholeAlphabetFragment()
-                            InputType.BINARY -> CalculatorBinaryFragment()
-                            InputType.EQUIVALENCE_FUNCTION -> CalculatorEqTwoFunctionsFragment()
-                        }
-                    R.id.action_result -> ResultFragment()
-                    else -> CalculatorReducedAlphabetFragment()
-                }
-
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.fragment_container, selectedFragment)
-                .commit()
+            replaceFragment(when (item.itemId) {
+                R.id.action_theory -> TheoryFragment()
+                R.id.action_calculator -> mainViewModel.getFragmentByInputType()
+                R.id.action_result -> ResultFragment()
+                else -> CalculatorReducedAlphabetFragment()
+            })
             true
         }
 

@@ -1,10 +1,15 @@
 package com.dikutenz.truthtables.viewModel
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dikutenz.truthtables.model.entities.BooleanFunction
 import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.model.enums.InputType.*
+import com.dikutenz.truthtables.views.calculators.CalculatorBinaryFragment
+import com.dikutenz.truthtables.views.calculators.CalculatorEqTwoFunctionsFragment
+import com.dikutenz.truthtables.views.calculators.CalculatorReducedAlphabetFragment
+import com.dikutenz.truthtables.views.calculators.CalculatorWholeAlphabetFragment
 
 class MainViewModel : ViewModel() {
 
@@ -68,5 +73,12 @@ class MainViewModel : ViewModel() {
         inputType = getStringToInputType(bf.inputType)
         booleanFunction.value = bf.value
         enterFinished = true
+    }
+
+    fun getFragmentByInputType(): Fragment = when (inputType) {
+        REDUCED_ALPHABET -> CalculatorReducedAlphabetFragment()
+        WHOLE_ALPHABET -> CalculatorWholeAlphabetFragment()
+        BINARY -> CalculatorBinaryFragment()
+        EQUIVALENCE_FUNCTION -> CalculatorEqTwoFunctionsFragment()
     }
 }

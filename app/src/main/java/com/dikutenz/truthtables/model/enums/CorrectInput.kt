@@ -1,5 +1,8 @@
 package com.dikutenz.truthtables.model.enums
 
+import com.dikutenz.truthtables.model.LogicOperations
+import com.dikutenz.truthtables.model.Solve
+
 enum class CorrectInput {
     OK, // Всё верно
     LACK_OPEN_PARENTHESIS, // Недостаточно открывающих скобок
@@ -10,3 +13,4 @@ enum class CorrectInput {
     LAST_ERROR, // Ошибочный последний символ
     OTHER_ERROR // Другие ошибки
 }
+

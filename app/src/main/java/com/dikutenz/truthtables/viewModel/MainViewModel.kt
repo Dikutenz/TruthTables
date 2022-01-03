@@ -16,6 +16,7 @@ class MainViewModel : ViewModel() {
     var isWholeTable = true
     var isSDNF = true
     var isSKNF = true
+    var isZhegalkin = true
     var inputType = REDUCED_ALPHABET
 
     var booleanFunction: MutableLiveData<String> = MutableLiveData("")

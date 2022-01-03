@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.dikutenz.truthtables.R
+import com.dikutenz.truthtables.model.CorrectError
 import com.dikutenz.truthtables.model.LogicOperations
 import com.dikutenz.truthtables.model.Solve
 import com.dikutenz.truthtables.model.enums.CorrectInput
@@ -109,8 +110,8 @@ class CalculatorEqTwoFunctionsFragment : Fragment(), CalculatorSettingFragment.O
     private fun solve() {
         val firstBooleanFunction = mainViewModel.booleanFunction.value!!
         val secondBooleanFunction = mainViewModel.secondBooleanFunction.value!!
-        val firstCorrectInput = Solve.checkCorrect(firstBooleanFunction)
-        val secondCorrectInput = Solve.checkCorrect(secondBooleanFunction)
+        val firstCorrectInput = CorrectError.checkCorrect(firstBooleanFunction)
+        val secondCorrectInput = CorrectError.checkCorrect(secondBooleanFunction)
         if(firstCorrectInput == CorrectInput.OK && secondCorrectInput == CorrectInput.OK){
             mainViewModel.enterFinished = true
             (requireActivity() as MainActivity).replaceFragment(ResultFragment())

@@ -6,14 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.R
-import com.dikutenz.truthtables.model.enums.InputType
-import com.dikutenz.truthtables.model.Solve.getBinaryTruthTable
-import com.dikutenz.truthtables.model.Solve.getTruthTable
+import com.dikutenz.truthtables.model.entities.BooleanFunction
+import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.views.adapters.TableAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -48,11 +45,8 @@ class ResultTruthTableFragment : Fragment() {
 
     private fun createTable() {
         val booleanFunction = mainViewModel.booleanFunction.value!!
-        val values = if (mainViewModel.inputType == InputType.BINARY) {
-            getBinaryTruthTable(booleanFunction)
-        } else {
-            getTruthTable(booleanFunction)
-        }
+        val bf = BooleanFunction(value = booleanFunction, inputType = mainViewModel.inputType.toString())
+        val values = bf.getTruthTable(true)
         recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = activity?.let { TableAdapter(values, it) }

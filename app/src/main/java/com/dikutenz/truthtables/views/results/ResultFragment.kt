@@ -42,8 +42,11 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_result, container, false)
         initUI(view)
-        (requireActivity() as MainActivity).supportActionBar?.title = "Результат"
+        getBooleanFunction()
+        return view
+    }
 
+    private fun getBooleanFunction() {
         mainViewModel.booleanFunction.observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && mainViewModel.enterFinished) sTextView.text = it
             else sTextView.text = "Нет данных"
@@ -55,12 +58,11 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener,
                 }
             }
         }
-        return view
     }
 
     private fun initUI(view: View) {
         toolbar = view.findViewById(R.id.toolbar2)
-        toolbar.title = "Калькулятор"
+        toolbar.title = "Результат"
         toolbar.inflateMenu(R.menu.result_menu)
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
@@ -85,8 +87,8 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener,
         sTextView = view.findViewById(R.id.s_text_view)
         s2TextView = view.findViewById(R.id.s2_text_view)
 
-        if (mainViewModel.inputType == InputType.EQUIVALENCE_FUNCTION) s2TextView.visibility =
-            View.VISIBLE
+        if (mainViewModel.inputType == InputType.EQUIVALENCE_FUNCTION)
+            s2TextView.visibility = View.VISIBLE
         else s2TextView.visibility = View.GONE
 
     }
@@ -138,6 +140,5 @@ class ResultFragment : Fragment(), HistoryAdapter.OnItemClickListener,
     override fun onDismiss() {
         setupViewPager(viewPager)
     }
-
 
 }

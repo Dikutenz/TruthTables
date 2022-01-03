@@ -7,14 +7,12 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.SNF
-import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.model.SNF.getStep1SKNF
 import com.dikutenz.truthtables.model.SNF.getStep2SKNF
-import com.dikutenz.truthtables.model.Solve
+import com.dikutenz.truthtables.model.entities.BooleanFunction
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ResultSKNFFragment : Fragment() {
@@ -28,7 +26,7 @@ class ResultSKNFFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.fragment_result_s_k_n_f, container, false)
         initUI(view)
@@ -39,13 +37,11 @@ class ResultSKNFFragment : Fragment() {
     private fun loadData() {
         mainViewModel.booleanFunction.observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && mainViewModel.enterFinished) {
+                val bf = BooleanFunction(value = it, inputType = mainViewModel.inputType.toString())
                 resultLayout.visibility = View.VISIBLE
                 step1TextView.text = getStep1SKNF(it, mainViewModel.inputType)
                 step2TextView.text = getStep2SKNF(it, mainViewModel.inputType)
-                step3TextView.text = SNF.getSKNF(
-                    if (mainViewModel.inputType == InputType.BINARY) Solve.getBinaryTruthTable(it)
-                    else Solve.getTruthTable(it)
-                )
+                step3TextView.text = SNF.getSKNF(bf.getTruthTable(true))
             } else {
                 resultLayout.visibility = View.GONE
             }

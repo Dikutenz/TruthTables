@@ -19,9 +19,9 @@ import com.dikutenz.truthtables.model.LogicOperations.norChar
 import com.dikutenz.truthtables.model.LogicOperations.notChar
 import com.dikutenz.truthtables.model.LogicOperations.orChar
 import com.dikutenz.truthtables.model.LogicOperations.xorChar
-import com.dikutenz.truthtables.model.Solve.getTruthTable
+import com.dikutenz.truthtables.model.entities.BooleanFunction
+import com.dikutenz.truthtables.model.enums.InputType.*
 import com.dikutenz.truthtables.viewModel.TheoryViewModel
-import com.dikutenz.truthtables.views.MainActivity
 import com.dikutenz.truthtables.views.adapters.TableAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -109,7 +109,8 @@ class LogicOperationsFragment : Fragment() {
         }
 
     private fun createTable(booleanFunction: String) {
-        val values = getTruthTable(booleanFunction)
+        val bf = BooleanFunction(value = booleanFunction, inputType = REDUCED_ALPHABET.toString())
+        val values = bf.getTruthTable(false)
         recyclerView.layoutManager =
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = activity?.let { TableAdapter(values, it) }

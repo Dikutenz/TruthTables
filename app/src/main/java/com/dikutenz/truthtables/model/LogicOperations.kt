@@ -3,17 +3,30 @@ package com.dikutenz.truthtables.model
 object LogicOperations {
 
     var notChar = '¬'
-    var andChar= '∧'
-    var orChar= '∨'
+    var andChar = '∧'
+    var orChar = '∨'
     var implyChar = '→'
     var eqChar = '⇔'
-    var xorChar= '⊕'
-    var norChar ='↓'
-    var nandChar ='|'
+    var xorChar = '⊕'
+    var norChar = '↓'
+    var nandChar = '|'
     var openingParenthesis = '('
     var closingParenthesis = ')'
 
-    fun getResultByOperation(x: ArrayList<Int>, char: Char, y: ArrayList<Int>): ArrayList<Int> {
+    fun getPriorByOper(logicOpers: Char) =
+        when (logicOpers) {
+            norChar -> 1
+            eqChar -> 2
+            implyChar -> 3
+            xorChar -> 4
+            orChar -> 5
+            andChar -> 6
+            notChar -> 7
+            else -> 10
+        }
+
+
+    fun getResultByOper(x: ArrayList<Int>, char: Char, y: ArrayList<Int>): ArrayList<Int> {
         var result: ArrayList<Int> = arrayListOf()
         when {
             (char == andChar) -> result = and(x, y)

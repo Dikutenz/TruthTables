@@ -12,7 +12,6 @@ import com.dikutenz.truthtables.model.enums.InputType
 import com.dikutenz.truthtables.viewModel.HistoryViewModel
 import com.dikutenz.truthtables.viewModel.MainViewModel
 import com.dikutenz.truthtables.views.calculators.CalculatorBinaryFragment
-import com.dikutenz.truthtables.views.calculators.CalculatorEqTwoFunctionsFragment
 import com.dikutenz.truthtables.views.calculators.CalculatorReducedAlphabetFragment
 import com.dikutenz.truthtables.views.calculators.CalculatorWholeAlphabetFragment
 import com.dikutenz.truthtables.views.results.ResultFragment
@@ -41,10 +40,10 @@ class MainActivity : AppCompatActivity(), FragmentChangeListener {
         mainViewModel.inputType = InputType.REDUCED_ALPHABET
         mainViewModel.isSDNF = true
         mainViewModel.isSKNF = true
+        mainViewModel.isZhegalkin = true
         mainViewModel.enterFinished = false
         replaceFragment(CalculatorReducedAlphabetFragment())
     }
-
 
     override fun replaceFragment(fragment: Fragment) {
         val idItemMenu =

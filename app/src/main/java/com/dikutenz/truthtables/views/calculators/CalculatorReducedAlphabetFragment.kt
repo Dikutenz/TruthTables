@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.dikutenz.truthtables.R
+import com.dikutenz.truthtables.model.CorrectError
 import com.dikutenz.truthtables.model.FragmentChangeListener
 import com.dikutenz.truthtables.model.LogicOperations
 import com.dikutenz.truthtables.model.Solve
@@ -71,7 +72,7 @@ class CalculatorReducedAlphabetFragment : Fragment(), CalculatorSettingFragment.
 
     private fun solve() {
         val booleanFunction = mainViewModel.booleanFunction.value!!
-        val correctInput = Solve.checkCorrect(booleanFunction)
+        val correctInput = CorrectError.checkCorrect(booleanFunction)
         val message = when (correctInput) {
             CorrectInput.OK -> "Вычисление!"
             CorrectInput.LACK_OPEN_PARENTHESIS -> "Недостаточно открывающих скобок!"

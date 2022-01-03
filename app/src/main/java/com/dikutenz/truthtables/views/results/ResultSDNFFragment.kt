@@ -1,23 +1,18 @@
 package com.dikutenz.truthtables.views.results
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
-import com.dikutenz.truthtables.viewModel.MainViewModel
-
+import androidx.fragment.app.Fragment
 import com.dikutenz.truthtables.R
 import com.dikutenz.truthtables.model.SNF
-import com.dikutenz.truthtables.model.enums.InputType.BINARY
 import com.dikutenz.truthtables.model.SNF.getStep1SDNF
 import com.dikutenz.truthtables.model.SNF.getStep2SDNF
-import com.dikutenz.truthtables.model.Solve
-import com.dikutenz.truthtables.model.Solve.getBinaryTruthTable
-import com.dikutenz.truthtables.model.Solve.getTruthTable
+import com.dikutenz.truthtables.model.entities.BooleanFunction
+import com.dikutenz.truthtables.viewModel.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ResultSDNFFragment : Fragment() {
@@ -43,12 +38,11 @@ class ResultSDNFFragment : Fragment() {
     private fun loadData() {
         mainViewModel.booleanFunction.observe(viewLifecycleOwner) {
             if (it.isNotEmpty() && mainViewModel.enterFinished) {
+                val bf = BooleanFunction(value = it, inputType = mainViewModel.inputType.toString())
                 resultLayout.visibility = View.VISIBLE
                 step1TextView.text = getStep1SDNF(it, mainViewModel.inputType)
                 step2TextView.text = getStep2SDNF(it, mainViewModel.inputType)
-                step3TextView.text = SNF.getSDNF(
-                    if (mainViewModel.inputType == BINARY) getBinaryTruthTable(it)
-                    else getTruthTable(it))
+                step3TextView.text = SNF.getSDNF(bf.getTruthTable(true))
             } else {
                 resultLayout.visibility = View.GONE
             }
